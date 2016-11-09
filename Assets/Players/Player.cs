@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Networking;
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+	private Vector3 inputValue;
+
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		if (!isLocalPlayer) {
+			return;
+		}
+		
+		inputValue.x = CrossPlatformInputManager.GetAxis ("Horizontal");
+		inputValue.y = 0f;
+		inputValue.z = CrossPlatformInputManager.GetAxis ("Vertical");
+
+		transform.Translate (inputValue * Time.deltaTime);
 	}
 }
